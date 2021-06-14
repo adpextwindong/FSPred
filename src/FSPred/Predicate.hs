@@ -21,6 +21,9 @@ root xs = flip DirectoryExists xs
 genSuffixFSet :: [FilePath] -> FilePath -> FSPattern
 genSuffixFSet xs s = FileSetExists $ FileExists <$> liftA2 (++) [s] xs
 
+genPreffixFSet :: [FilePath] -> FilePath -> FSPattern
+genPreffixFSet xs s = FileSetExists $ FileExists <$> liftA2 (++) xs [s]
+
 genTs :: Serial -> FilePath -> FSPattern
 genTs s = root [
             DirectoryExists ("qc"<>s) [
