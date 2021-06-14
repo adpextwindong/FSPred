@@ -4,6 +4,8 @@
 
 Experimental library for representing file system patterns because I hate writing this stuff manually.
 
+For now its geared towards top down exploration of a file system hiearchy (ideally zip files too in the future) in a scripting setting. Once I nail down the design more I'll be figuring out representing actions.
+
 ## TODO
 
 - Interpretter for checking predicates against the file system.
