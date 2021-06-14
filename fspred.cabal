@@ -17,6 +17,8 @@ author:             Takumi Crary
 maintainer:         tcrary@gmail.com
 
 -- A copyright notice.
+license:            BSD-2-Clause
+license-file:       LICENSE
 -- copyright:
 -- category:
 
