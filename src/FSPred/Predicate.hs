@@ -1,5 +1,3 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
-
 module FSPred.Predicate where
 
 import System.FilePath()
@@ -16,7 +14,7 @@ data FSPattern =
 
 --Test fixtures
 root :: [FSPattern] -> FilePath -> FSPattern
-root xs = flip DirectoryExists xs
+root = flip DirectoryExists
 
 genSuffixFSet :: [FilePath] -> FilePath -> FSPattern
 genSuffixFSet xs s = FileSetExists $ FileExists <$> liftA2 (++) [s] xs
