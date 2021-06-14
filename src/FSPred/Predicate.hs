@@ -4,8 +4,6 @@ import System.FilePath()
 import Data.Semigroup()
 import Control.Applicative
 
-type Serial = String
-
 data FSPattern =
     DirectoryExists FilePath [FSPattern]
   | FilePath :/ [FSPattern]
@@ -14,7 +12,6 @@ data FSPattern =
   | FileExists FilePath
   deriving Show
 
---Test fixtures
 root :: [FSPattern] -> FilePath -> FSPattern
 root = flip DirectoryExists
 
@@ -24,7 +21,8 @@ genSuffixFSet xs s = FileSetExists $ liftA2 (++) [s] xs
 genPreffixFSet :: [FilePath] -> FilePath -> FSPattern
 genPreffixFSet xs s = FileSetExists $ liftA2 (++) xs [s]
 
-genTs :: Serial -> FilePath -> FSPattern
+--Test fixtures
+genTs :: String -> FilePath -> FSPattern
 genTs s = root [
             DirectoryExists ("qc"<>s) [
                    genSuffixFSet [".fbd",".stl",".fit.stl"] s,
@@ -52,8 +50,6 @@ genTs s = DirectoryExists s [pattern]
 
 -}
 --How do we support annotations for file validation/verification?
---What if we used an infix '/' operator for the directory type constructor???
-
 
 --What about parsing something like this
 {-
