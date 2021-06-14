@@ -12,6 +12,9 @@ data FSPattern =
   | FileExists FilePath
   deriving Show
 
+--TODO Consider an instance for Alternative kind of like optparse-applicative
+--Maybe an applicative instance too
+
 --Flattens potential nested WildCard terms
 flatten :: FSPattern -> FSPattern
 flatten (WildCard (WildCard x)) = flatten x
