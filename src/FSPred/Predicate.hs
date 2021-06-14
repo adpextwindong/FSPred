@@ -8,7 +8,7 @@ type Serial = String
 
 data FSPattern =
     DirectoryExists FilePath [FSPattern]
-  | FileSetExists [FSPattern]
+  | FileSetExists [FilePath]
   | FileExists FilePath
   deriving Show
 
@@ -17,10 +17,10 @@ root :: [FSPattern] -> FilePath -> FSPattern
 root = flip DirectoryExists
 
 genSuffixFSet :: [FilePath] -> FilePath -> FSPattern
-genSuffixFSet xs s = FileSetExists $ FileExists <$> liftA2 (++) [s] xs
+genSuffixFSet xs s = FileSetExists $ liftA2 (++) [s] xs
 
 genPreffixFSet :: [FilePath] -> FilePath -> FSPattern
-genPreffixFSet xs s = FileSetExists $ FileExists <$> liftA2 (++) xs [s]
+genPreffixFSet xs s = FileSetExists $ liftA2 (++) xs [s]
 
 genTs :: Serial -> FilePath -> FSPattern
 genTs s = root [
