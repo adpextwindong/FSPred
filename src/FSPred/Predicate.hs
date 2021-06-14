@@ -12,6 +12,14 @@ data FSPattern =
   | FileExists FilePath
   deriving Show
 
+--Flattens potential nested WildCard terms
+flatten :: FSPattern -> FSPattern
+flatten (WildCard (WildCard x)) = flatten x
+flatten (DirectoryExists f xs) = DirectoryExists f (fmap flatten xs)
+flatten (f :/ xs) = f :/ fmap flatten xs
+--TODO tests for this
+flatten x = x
+
 root :: [FSPattern] -> FilePath -> FSPattern
 root = flip DirectoryExists
 
@@ -37,6 +45,7 @@ genTs s = root [
             FileExists "table.ctd"
           ]
 
+dirInfTest :: FSPattern
 dirInfTest = "foo" :/ [ FileExists "baz.txt"]
 {-
 genTs :: FilePath -> FSPattern
