@@ -8,6 +8,8 @@ type Serial = String
 
 data FSPattern =
     DirectoryExists FilePath [FSPattern]
+  | FilePath :/ [FSPattern]
+  | WildCard FSPattern
   | FileSetExists [FilePath]
   | FileExists FilePath
   deriving Show
@@ -36,6 +38,8 @@ genTs s = root [
             FileExists "Model.ini",
             FileExists "table.ctd"
           ]
+
+dirInfTest = "foo" :/ [ FileExists "baz.txt"]
 {-
 genTs :: FilePath -> FSPattern
 genTs s = DirectoryExists s [pattern]
