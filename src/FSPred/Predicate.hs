@@ -4,8 +4,11 @@ import System.FilePath()
 import Data.Semigroup()
 import Control.Applicative
 
-data FSPattern =
-    DirectoryExists FilePath [FSPattern]
+--TODO brainstorm validation ideas
+data FValidation a = FValidation (a -> Bool)
+
+data FSPattern
+  = DirectoryExists FilePath [FSPattern]
   | FilePath :/ [FSPattern]
   | WildCard FSPattern
   | FileSetExists [FilePath]
@@ -16,11 +19,11 @@ data FSPattern =
 --Maybe an applicative instance too
 
 --Flattens potential nested WildCard terms
+--TODO tests for this
 flatten :: FSPattern -> FSPattern
 flatten (WildCard (WildCard x)) = flatten x
 flatten (DirectoryExists f xs) = DirectoryExists f (fmap flatten xs)
 flatten (f :/ xs) = f :/ fmap flatten xs
---TODO tests for this
 flatten x = x
 
 root :: [FSPattern] -> FilePath -> FSPattern
@@ -61,7 +64,6 @@ genTs s = DirectoryExists s [pattern]
             )
 
 -}
---How do we support annotations for file validation/verification?
 
 --What about parsing something like this
 {-
